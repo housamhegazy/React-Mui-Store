@@ -29,6 +29,8 @@ export default function Home() {
   // @ts-ignore
   const insertedProducts = useSelector((state) => state.counter)
   const dispatch = useDispatch()
+
+  // const Quantity = insertedProducts.find(())
   if (error) {
     return <Typography>error...</Typography>;
   }
@@ -67,30 +69,35 @@ export default function Home() {
                 sx={{ justifyContent: "space-between" }}
                 disableSpacing
               >
+
+                {insertedProducts.find((item)=>{item.id !== id})? 
+                
                 <Button
-                  onClick={() => {
-                    dispatch(addToCart(item));
-                  }}
-                  size="small"
-                  sx={{ textTransform: "capitalize" }}
-                  variant="contained"
-                >
-                  <ShoppingCart />
-                  add to Basket
-                </Button>
-                <Stack direction="row" sx={{ alignItems: "center" }}>
-                  <Button onClick={() => {
-                    dispatch(decreaseProducts(item));
-                  }} sx={{ mx: 1 }}>
-                    <Remove fontSize="small" />
-                  </Button>
-                  <StyledBadge badgeContent={2} color="secondary" />
-                  <Button onClick={() => {
-                    dispatch(increaseProducts(item));
-                  }} sx={{ mx: 1 }}>
-                    <Add fontSize="small" />
-                  </Button>
-                </Stack>
+                onClick={() => {
+                  dispatch(addToCart(item));
+                }}
+                size="small"
+                sx={{ textTransform: "capitalize" }}
+                variant="contained"
+              >
+                <ShoppingCart />
+                add to Basket
+              </Button>
+              :
+              <Stack direction="row" sx={{ alignItems: "center" }}>
+              <Button onClick={() => {
+                dispatch(decreaseProducts(item));
+              }} sx={{ mx: 1 }}>
+                <Remove fontSize="small" />
+              </Button>
+              <StyledBadge badgeContent={2} color="secondary" />
+              <Button onClick={() => {
+                dispatch(increaseProducts(item));
+              }} sx={{ mx: 1 }}>
+                <Add fontSize="small" />
+              </Button>
+            </Stack>
+              }
                 <Typography>$ {price}</Typography>
               </CardActions>
             </Card>

@@ -9,17 +9,24 @@ export const counterSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-     const newArray = state.insertedProducts.push({...action.payload, "Quantity":"1"})
-    //  state.insertedProducts = newArray;
+     const newArray = state.insertedProducts.push({...action.payload, "Quantity":1})
+     state.insertedProducts = newArray;
     },
     increaseProducts: (state, action) => {
-    //   state.insertedProducts =[]
+       const increasedProduct = state.insertedProducts.find((item)=>{item.id === action.payload.id})
+       increasedProduct.Quantity++
     },
     decreaseProducts: (state, action) => {
-    //   state.insertedProducts =[]
+        const increasedProduct = state.insertedProducts.find((item)=>{item.id === action.payload.id})
+        increasedProduct.Quantity--
+        if(increasedProduct.Quantity === 0){
+        const newArray2 = state.insertedProducts.filter((item)=>{item.id !== action.payload.id})
+        state.insertedProducts = newArray2;
+        }
     },
     deleteProducts: (state, action) => {
-    //   state.insertedProducts = action.payload
+        const newArray2 = state.insertedProducts.filter((item)=>{item.id !== action.payload.id})
+        state.insertedProducts = newArray2;
     },
   },
 })
