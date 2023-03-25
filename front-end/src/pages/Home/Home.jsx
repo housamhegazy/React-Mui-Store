@@ -1,6 +1,7 @@
-import { MoreVert, ShoppingCart } from "@mui/icons-material";
+import { Add, MoreVert, Remove, ShoppingCart } from "@mui/icons-material";
 import {
   Avatar,
+  Badge,
   Button,
   Card,
   CardActions,
@@ -9,12 +10,25 @@ import {
   CardMedia,
   IconButton,
   Stack,
+  styled,
   Typography,
 } from "@mui/material";
+import { addToCart, decreaseProducts, increaseProducts } from "Redux/CartSlice";
 import { useGetproductsByNameQuery } from "../../Redux/products";
+import { useSelector, useDispatch } from 'react-redux'
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 6px",
+  },
+}));
 
 export default function Home() {
   const { data, error, isLoading } = useGetproductsByNameQuery();
+  // @ts-ignore
+  const insertedProducts = useSelector((state) => state.counter)
+  const dispatch = useDispatch()
   if (error) {
     return <Typography>error...</Typography>;
   }
@@ -22,17 +36,15 @@ export default function Home() {
     return <Typography>Loading...</Typography>;
   }
   if (data) {
-    
     return (
       <Stack
         direction="row"
         sx={{ flexWrap: "wrap", justifyContent: "center" }}
-
       >
         {data.map((item) => {
           const { id, productName, description, imageLink, price } = item;
           return (
-            <Card key={id} sx={{ maxWidth: 300 ,margin:2}}>
+            <Card key={id} sx={{ maxWidth: 300, margin: 2 }}>
               <Typography sx={{ overflow: "hidden", p: 2 }}>
                 {productName}
               </Typography>
@@ -56,6 +68,9 @@ export default function Home() {
                 disableSpacing
               >
                 <Button
+                  onClick={() => {
+                    dispatch(addToCart(item));
+                  }}
                   size="small"
                   sx={{ textTransform: "capitalize" }}
                   variant="contained"
@@ -63,6 +78,19 @@ export default function Home() {
                   <ShoppingCart />
                   add to Basket
                 </Button>
+                <Stack direction="row" sx={{ alignItems: "center" }}>
+                  <Button onClick={() => {
+                    dispatch(decreaseProducts(item));
+                  }} sx={{ mx: 1 }}>
+                    <Remove fontSize="small" />
+                  </Button>
+                  <StyledBadge badgeContent={2} color="secondary" />
+                  <Button onClick={() => {
+                    dispatch(increaseProducts(item));
+                  }} sx={{ mx: 1 }}>
+                    <Add fontSize="small" />
+                  </Button>
+                </Stack>
                 <Typography>$ {price}</Typography>
               </CardActions>
             </Card>
