@@ -4,9 +4,19 @@ import { useParams } from "react-router-dom";
 import "./productDetails.css";
 import DetailsThumb from "./productDetailsThumb";
 import { Remove, Add, ShoppingCart } from "@mui/icons-material";
-import { Stack,Typography, Badge, Button, styled } from "@mui/material";
+import {
+  Stack,
+  Typography,
+  Box,
+  Badge,
+  Button,
+  styled,
+  CircularProgress,
+} from "@mui/material";
 import { decreaseProducts, increaseProducts, addToCart } from "Redux/CartSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Helmet } from "react-helmet-async";
+
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     border: `2px solid ${theme.palette.background.paper}`,
@@ -41,11 +51,22 @@ export default function ProductDetails() {
     return <Typography>error...</Typography>;
   }
   if (isLoading) {
-    return <Typography>Loading...</Typography>;
+    return (
+      <Box sx={{ height:"80vh",display: "flex" ,justifyContent:"center",alignItems:"center"}}>
+        <Helmet>
+          <title>loading ...</title>
+        </Helmet>
+        <CircularProgress />
+      </Box>
+    );
   }
   if (data) {
     return (
       <div className="app productdetails">
+        <Helmet>
+          <title>product details</title>
+          <meta name="product details" content={data.description} />
+        </Helmet>
         <div className="details" key={data.id}>
           <div className="big-img">
             <img src={data.imageLink[index]} alt="" />
@@ -66,7 +87,7 @@ export default function ProductDetails() {
               myRef={myRef}
             />
             {insertedProducts.find((product) => product.id === data.id) ? (
-              <Stack direction="row" sx={{ alignItems: "center" ,mt:3}}>
+              <Stack direction="row" sx={{ alignItems: "center", mt: 3 }}>
                 <Button
                   size="small"
                   onClick={() => {
@@ -96,7 +117,7 @@ export default function ProductDetails() {
                   dispatch(addToCart(data));
                 }}
                 size="small"
-                sx={{ textTransform: "capitalize",mt:2 }}
+                sx={{ textTransform: "capitalize", mt: 2 }}
                 variant="contained"
               >
                 <ShoppingCart />

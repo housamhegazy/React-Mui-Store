@@ -2,11 +2,13 @@ import { Add, Remove, ShoppingCart } from "@mui/icons-material";
 import {
   Badge,
   Button,
+  Box,
   Card,
   CardActions,
   CardContent,
   CardMedia,
   Stack,
+  CircularProgress,
   styled,
   Typography,
 } from "@mui/material";
@@ -18,6 +20,7 @@ import {
 import { useGetproductsByNameQuery } from "../../Redux/products";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     border: `2px solid ${theme.palette.background.paper}`,
@@ -40,7 +43,14 @@ export default function Home() {
     return <Typography>error...</Typography>;
   }
   if (isLoading) {
-    return <Typography>Loading...</Typography>;
+    return (
+      <Box sx={{ height:"80vh",display: "flex" ,justifyContent:"center",alignItems:"center"}}>
+        <Helmet>
+          <title>loading ...</title>
+        </Helmet>
+        <CircularProgress />
+      </Box>
+    );
   }
   if (data) {
     return (
@@ -48,6 +58,10 @@ export default function Home() {
         direction="row"
         sx={{ flexWrap: "wrap", justifyContent: "center" }}
       >
+        <Helmet>
+          <title>META store</title>
+          <meta name="products" content={"largest store in usa"} />
+        </Helmet>
         {data.map((item) => {
           const { id, productName, description, imageLink, price } = item;
           return (

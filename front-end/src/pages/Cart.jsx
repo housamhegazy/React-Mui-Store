@@ -17,6 +17,7 @@ import {
   increaseProducts,
 } from "Redux/CartSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { Helmet } from "react-helmet-async";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -40,7 +41,10 @@ export default function Cart() {
 
   return (
     <Box>
-      
+      <Helmet>
+          <title>META Cart</title>
+          <meta name="products" content={"largest store in usa"} />
+        </Helmet>
       {insertedProducts.map((item) => {
 
         const { id, productName, imageLink, price, Quantity } =

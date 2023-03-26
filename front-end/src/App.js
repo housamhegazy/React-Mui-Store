@@ -1,4 +1,6 @@
 import "./styles.css";
+import { HelmetProvider } from "react-helmet-async";
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -8,13 +10,15 @@ import {
 import Home from "./pages/Home/Home";
 import Root from "./pages/Root";
 import Cart from "./pages/Cart";
-import ProductDetails from './pages/productDetails/productDetails'
+import ProductDetails from "./pages/productDetails/productDetails";
+import NotFound from "pages/NotFoundPage";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
       <Route index element={<Home />} />
       <Route path="cart" element={<Cart />} />
       <Route path="productdetails/:id" element={<ProductDetails />} />
+      <Route path="*" element={<NotFound />} />
       {/* ... etc. */}
     </Route>
   )
@@ -22,8 +26,10 @@ const router = createBrowserRouter(
 
 export default function App() {
   return (
-    <div className="App">
-     <RouterProvider router={router} />
-    </div>
+    <HelmetProvider>
+      <div className="App">
+        <RouterProvider router={router} />
+      </div>
+    </HelmetProvider>
   );
 }
