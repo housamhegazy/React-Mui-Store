@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useGetoneproductsByNameQuery } from "../../Redux/products";
 import { useParams } from "react-router-dom";
-import 'productDetails.css';
+import './productDetails.css';
 import DetailsThumb from "./productDetailsThumb";
 
 export default function ProductDetails() {
@@ -23,26 +23,25 @@ export default function ProductDetails() {
   if (data) {
     return (
       <div className="app productdetails">
-        {data.map((item) => (
-          <div className="details" key={item.id}>
+          <div className="details" key={data.id}>
             <div className="big-img">
-              <img src={item.imageLink[item.index]} alt="" />
+              <img src={data.imageLink[index]} alt="" />
             </div>
 
             <div className="box">
               <div className="row">
-                <h2>{item.productname}</h2>
-                <span>${item.price}</span>
+                <h2>{data.productname}</h2>
+                <span>${data.price}</span>
               </div>
-              {/* <Colors colors={item.colors} /> */}
+              {/* <Colors colors={data.colors} /> */}
 
-              <p>{item.description}</p>
+              <p>{data.description}</p>
 
-              <DetailsThumb images={item.imageLink} tab={handleTab} myRef={myRef} />
+              <DetailsThumb images={data.imageLink} tab={handleTab} myRef={myRef} />
               <button className="cart">Add to cart</button>
             </div>
           </div>
-        ))}
+        
       </div>
     );
   }
