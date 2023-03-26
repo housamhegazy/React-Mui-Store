@@ -95,7 +95,7 @@ export default function Appbar({ handleDrawerToggle, drawerWidth }) {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          <Avatar sx={{mx:2}} alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+          <Avatar sx={{mx:2}} alt="Cindy Baker" src="./profile.jpg" />
         </Toolbar>
       </AppBar>
     </Box>

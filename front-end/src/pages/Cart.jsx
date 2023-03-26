@@ -70,6 +70,7 @@ export default function Cart() {
               }}
               size="small"
               variant="contained"
+              color='error'
               sx={{
                 display: { xs: "none", sm: "block" },
                 textTransform: "capitalize",
