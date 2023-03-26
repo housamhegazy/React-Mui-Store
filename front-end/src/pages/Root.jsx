@@ -32,7 +32,7 @@ export default function Root() {
       <div>
         <Appbar {...{ handleDrawerToggle, drawerWidth }} />
         <Drawerr
-          {...{ handleDrawerToggle, mobileOpen, drawerWidth, theme, setmyMOde }}
+          {...{ setMobileOpen,handleDrawerToggle, mobileOpen, drawerWidth, theme, setmyMOde }}
         />
         <Box
           sx={{

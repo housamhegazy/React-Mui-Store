@@ -34,6 +34,7 @@ export default function Drawerr({
   drawerWidth,
   theme,
   setmyMOde,
+  setMobileOpen
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -90,7 +91,7 @@ export default function Drawerr({
             disablePadding
             onClick={() => {
               navigate(item.path);
-              
+              setMobileOpen(false)
             }}
           >
             <ListItemButton>
