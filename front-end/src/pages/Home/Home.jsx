@@ -1,21 +1,22 @@
-import { Add, MoreVert, Remove, ShoppingCart } from "@mui/icons-material";
+import { Add, Remove, ShoppingCart } from "@mui/icons-material";
 import {
-  Avatar,
   Badge,
   Button,
   Card,
   CardActions,
   CardContent,
-  CardHeader,
   CardMedia,
-  IconButton,
   Stack,
   styled,
   Typography,
 } from "@mui/material";
-import { addToCart, decreaseProducts, increaseProducts } from "Redux/CartSlice";
+import {
+  addToCart,
+  decreaseProducts,
+  increaseProducts,
+} from "../../Redux/CartSlice";
 import { useGetproductsByNameQuery } from "../../Redux/products";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -26,11 +27,15 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 export default function Home() {
   const { data, error, isLoading } = useGetproductsByNameQuery();
-  // @ts-ignore
-  const insertedProducts = useSelector((state) => state.counter)
-  const dispatch = useDispatch()
 
-  // const Quantity = insertedProducts.find(())
+  const dispatch = useDispatch();
+  // @ts-ignore
+  const { insertedProducts } = useSelector((state) => state.counter);
+
+  const Quantity = (id)=>{
+    const myproduct = insertedProducts.find((product)=>product.id === id)
+    return myproduct.Quantity
+  }
   if (error) {
     return <Typography>error...</Typography>;
   }
@@ -70,34 +75,40 @@ export default function Home() {
                 disableSpacing
               >
 
-                {insertedProducts.find((item)=>{item.id !== id})? 
-                
-                <Button
-                onClick={() => {
-                  dispatch(addToCart(item));
-                }}
-                size="small"
-                sx={{ textTransform: "capitalize" }}
-                variant="contained"
-              >
-                <ShoppingCart />
-                add to Basket
-              </Button>
-              :
-              <Stack direction="row" sx={{ alignItems: "center" }}>
-              <Button onClick={() => {
-                dispatch(decreaseProducts(item));
-              }} sx={{ mx: 1 }}>
-                <Remove fontSize="small" />
-              </Button>
-              <StyledBadge badgeContent={2} color="secondary" />
-              <Button onClick={() => {
-                dispatch(increaseProducts(item));
-              }} sx={{ mx: 1 }}>
-                <Add fontSize="small" />
-              </Button>
-            </Stack>
-              }
+                {insertedProducts.find((product) => product.id === id) ? (
+                  <Stack direction="row" sx={{ alignItems: "center" }}>
+                    <Button size='small'
+                      onClick={() => {
+                        dispatch(decreaseProducts(item));
+                      }}
+                      sx={{ mx: 1 }}
+                    >
+                      <Remove fontSize="small" />
+                    </Button>
+                    <StyledBadge badgeContent={Quantity(id)} color="secondary" />
+                    <Button size='small'
+                      onClick={() => {
+                        dispatch(increaseProducts(item));
+                      }}
+                      sx={{ mx: 1 }}
+                    >
+                      <Add fontSize="small" />
+                    </Button>
+                  </Stack>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      dispatch(addToCart(item));
+                      
+                    }}
+                    size="small"
+                    sx={{ textTransform: "capitalize" }}
+                    variant="contained"
+                  >
+                    <ShoppingCart />
+                    add to Basket
+                  </Button>
+                )}
                 <Typography>$ {price}</Typography>
               </CardActions>
             </Card>

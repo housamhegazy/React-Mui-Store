@@ -17,6 +17,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HomeIcon from "@mui/icons-material/Home";
 import { useLocation } from "react-router-dom";
 import { styled } from "@mui/material/styles";
+import { useSelector } from "react-redux";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -36,13 +37,14 @@ export default function Drawerr({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
-
+  // @ts-ignore
+  const { insertedProducts } = useSelector((state) => state.counter);
   const myList = [
     { name: "Home", icon: <HomeIcon />, path: "/" },
     {
       name: "Cart",
       icon: (
-        <StyledBadge badgeContent={2} color="secondary">
+        <StyledBadge badgeContent={insertedProducts.length} color="secondary">
           <ShoppingCartIcon />
         </StyledBadge>
       ),
