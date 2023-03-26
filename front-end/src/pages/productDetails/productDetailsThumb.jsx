@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+
 
 export default function DetailsThumb({images,myRef,tab}) {
         return (

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import "./productDetails.css";
 import DetailsThumb from "./productDetailsThumb";
 import { Remove, Add, ShoppingCart } from "@mui/icons-material";
-import { Stack, Badge, Button, styled } from "@mui/material";
+import { Stack,Typography, Badge, Button, styled } from "@mui/material";
 import { decreaseProducts, increaseProducts, addToCart } from "Redux/CartSlice";
 import { useDispatch, useSelector } from "react-redux";
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -37,7 +37,12 @@ export default function ProductDetails() {
     }
     images[index].className = "active";
   };
-
+  if (error) {
+    return <Typography>error...</Typography>;
+  }
+  if (isLoading) {
+    return <Typography>Loading...</Typography>;
+  }
   if (data) {
     return (
       <div className="app productdetails">
