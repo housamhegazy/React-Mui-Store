@@ -29,11 +29,24 @@ export default function Cart() {
   // @ts-ignore
   const { insertedProducts } = useSelector((state) => state.counter);
   const dispatch = useDispatch();
+  let totalPrice =0;
+  let totalQuantity =0;
+
+  if(insertedProducts.length === 0){
+    return(
+      <Paper sx={{width:"200px",mx:"auto",p:"10px"}}>cart is empty  😞 😞 </Paper>
+    )
+  }
+
   return (
     <Box>
+      
       {insertedProducts.map((item) => {
-        const { id, productName, description, imageLink, price, Quantity } =
+
+        const { id, productName, imageLink, price, Quantity } =
           item;
+          totalPrice += price * Quantity 
+          totalQuantity += Quantity
         return (
           <Paper
             key={id}
@@ -118,6 +131,18 @@ export default function Cart() {
           </Paper>
         );
       })}
+      <Paper sx={{width:"200px",mx:"auto",p:"10px"}}>
+        <Stack direction='row' sx={{justifyContent:"space-between",my:2}}>
+          <Typography>subTotal price</Typography>
+          <Typography>$ {totalPrice}</Typography>
+        </Stack>
+        <Stack direction='row' sx={{justifyContent:"space-between",my:2}}>
+          <Typography>pieces </Typography>
+          <Typography>{totalQuantity}</Typography>
+        </Stack>
+        <Button sx={{mt:2,mx:"auto",display:'block'}} variant='contained'>checkOut</Button>
+      </Paper>
+
     </Box>
   );
 }

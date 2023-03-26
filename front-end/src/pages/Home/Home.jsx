@@ -17,7 +17,7 @@ import {
 } from "../../Redux/CartSlice";
 import { useGetproductsByNameQuery } from "../../Redux/products";
 import { useSelector, useDispatch } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     border: `2px solid ${theme.palette.background.paper}`,
@@ -31,11 +31,11 @@ export default function Home() {
   const dispatch = useDispatch();
   // @ts-ignore
   const { insertedProducts } = useSelector((state) => state.counter);
-
-  const Quantity = (id)=>{
-    const myproduct = insertedProducts.find((product)=>product.id === id)
-    return myproduct.Quantity
-  }
+  const navigate = useNavigate();
+  const Quantity = (id) => {
+    const myproduct = insertedProducts.find((product) => product.id === id);
+    return myproduct.Quantity;
+  };
   if (error) {
     return <Typography>error...</Typography>;
   }
@@ -56,6 +56,9 @@ export default function Home() {
                 {productName}
               </Typography>
               <CardMedia
+                onClick={() => {
+                  navigate(`productdetails/${id}`);
+                }}
                 component="img"
                 height="194"
                 image={imageLink[0]}
@@ -74,10 +77,10 @@ export default function Home() {
                 sx={{ justifyContent: "space-between" }}
                 disableSpacing
               >
-
                 {insertedProducts.find((product) => product.id === id) ? (
                   <Stack direction="row" sx={{ alignItems: "center" }}>
-                    <Button size='small'
+                    <Button
+                      size="small"
                       onClick={() => {
                         dispatch(decreaseProducts(item));
                       }}
@@ -85,8 +88,12 @@ export default function Home() {
                     >
                       <Remove fontSize="small" />
                     </Button>
-                    <StyledBadge badgeContent={Quantity(id)} color="secondary" />
-                    <Button size='small'
+                    <StyledBadge
+                      badgeContent={Quantity(id)}
+                      color="secondary"
+                    />
+                    <Button
+                      size="small"
                       onClick={() => {
                         dispatch(increaseProducts(item));
                       }}
@@ -99,7 +106,6 @@ export default function Home() {
                   <Button
                     onClick={() => {
                       dispatch(addToCart(item));
-                      
                     }}
                     size="small"
                     sx={{ textTransform: "capitalize" }}
