@@ -90,6 +90,7 @@ export default function Drawerr({
             disablePadding
             onClick={() => {
               navigate(item.path);
+              
             }}
           >
             <ListItemButton>
