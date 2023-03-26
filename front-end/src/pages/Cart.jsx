@@ -35,7 +35,12 @@ export default function Cart() {
 
   if(insertedProducts.length === 0){
     return(
-      <Paper sx={{width:"200px",mx:"auto",p:"10px"}}>cart is empty  😞 😞 </Paper>
+      <Paper sx={{width:"200px",mx:"auto",p:"10px"}}>
+        <Helmet>
+          <title>META Cart</title>
+          <meta name="products" content={"largest store in usa"} />
+        </Helmet>
+        cart is empty  😞 😞 </Paper>
     )
   }
 
