@@ -56,14 +56,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Appbar({ handleDrawerToggle, drawerWidth }) {
   const navigate = useNavigate()
   return (
-    <Box
-      sx={{
+      <AppBar position="sticky"  sx={{
         width: {xs:"100%",sm:`calc(100% - ${drawerWidth}px )`},
         flexGrow: 1,
         ml: { xs: 0, sm: `${drawerWidth}px` },
-      }}
-    >
-      <AppBar position="static">
+      }}>
         <Toolbar>
           <IconButton
             onClick={handleDrawerToggle}
@@ -98,6 +95,6 @@ export default function Appbar({ handleDrawerToggle, drawerWidth }) {
           <Avatar sx={{mx:2}} alt="Cindy Baker" src="./profile.jpg" />
         </Toolbar>
       </AppBar>
-    </Box>
+  
   );
 }
